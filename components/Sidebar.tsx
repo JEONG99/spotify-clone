@@ -7,6 +7,8 @@ import { IoSearch } from "react-icons/io5";
 import { FaSpotify } from "react-icons/fa";
 import SidebarLink from "@/components/SidebarLink";
 import Library from "@/components/Library";
+import usePlayer from "@/hooks/usePlayer";
+import { twMerge } from "tailwind-merge";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -14,6 +16,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   const pathname = usePathname();
+  const { activeId } = usePlayer();
   const routes = useMemo(() => {
     return [
       {
@@ -32,7 +35,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   }, [pathname]);
 
   return (
-    <div className="flex gap-2 h-full p-2">
+    <div
+      className={twMerge(
+        "flex gap-2 p-2",
+        activeId ? "h-[calc(100%-80px)]" : "h-full"
+      )}
+    >
       <div className="flex flex-col gap-2 h-full min-w-[420px]">
         <div className="flex flex-col gap-5 p-5 rounded-md bg-neutral-900">
           <div className="flex items-center gap-[2px]">

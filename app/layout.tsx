@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar";
 import UserProvider from "@/provider/UserProvider";
 import SupabaseProvider from "@/provider/SupabaseProvider";
 import ToastProvider from "@/provider/ToastProvider";
+import Player from "@/components/Player";
 
 const notoSansKr = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         <SupabaseProvider>
           <UserProvider>
             <Sidebar>{children}</Sidebar>
+            <Player />
           </UserProvider>
         </SupabaseProvider>
       </body>

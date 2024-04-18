@@ -4,11 +4,15 @@ import { Song } from "@/types";
 
 interface SongItemProps {
   song: Song;
+  onPlay: (id: string) => void;
 }
 
-const SongItem: React.FC<SongItemProps> = ({ song }) => {
+const SongItem: React.FC<SongItemProps> = ({ song, onPlay }) => {
   return (
-    <div className="relative p-3 rounded-md cursor-pointer hover:bg-neutral-800 transition-colors group">
+    <div
+      className="relative p-3 rounded-md cursor-pointer hover:bg-neutral-800 transition-colors group"
+      onClick={() => onPlay(song.id)}
+    >
       <div className="relative w-full aspect-square rounded-full overflow-hidden">
         <Image src={song.image_path} alt={song.title} fill />
       </div>
