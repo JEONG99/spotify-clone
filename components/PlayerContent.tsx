@@ -8,6 +8,7 @@ import { Song } from "@/types";
 import usePlayer from "@/hooks/usePlayer";
 import MediaItem from "@/components/MediaItem";
 import VolumeSlider from "@/components/VolumeSlider";
+import LikeButton from "@/components/LikeButton";
 
 interface PlayerContentProps {
   song: Song;
@@ -86,6 +87,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
       <div className="flex w-full justify-start">
         <div className="flex items-center gap-x-4">
           <MediaItem song={song} />
+          <LikeButton songId={song.id} />
         </div>
       </div>
       <div className="flex md:hidden col-auto w-full justify-end items-center">

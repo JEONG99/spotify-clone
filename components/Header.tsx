@@ -9,15 +9,18 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import KakaoLogIn from "@/components/KakaoLogIn";
 import { useUser } from "@/hooks/useUser";
+import usePlayer from "@/hooks/usePlayer";
 
 const Header = () => {
   const router = useRouter();
   const { userDetails } = useUser();
+  const player = usePlayer();
   const supabase = useSupabaseClient();
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
     router.refresh();
+    player.reset();
     if (error) {
       toast.error(error.message);
     } else {

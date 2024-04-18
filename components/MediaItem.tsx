@@ -1,5 +1,6 @@
-import { Song } from "@/types";
 import Image from "next/image";
+
+import { Song } from "@/types";
 
 interface MediaItemProps {
   song: Song;
