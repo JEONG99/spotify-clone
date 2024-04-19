@@ -2,10 +2,13 @@ import { TbPlaylist } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 import MediaItem from "@/components/MediaItem";
 import LikeButton from "@/components/LikeButton";
+import useOnPlay from "@/hooks/useOnPlay";
 import useLikedSongs from "@/hooks/useLikedSongs";
 
 const Library = () => {
   const { data: songs } = useLikedSongs();
+  const onPlay = useOnPlay(songs || []);
+
   return (
     <div>
       <div className="flex justify-between items-center p-5">
@@ -28,7 +31,7 @@ const Library = () => {
       <ul>
         {songs?.map((song) => (
           <div key={song.id} className="flex gap-2 pr-5">
-            <MediaItem song={song} />
+            <MediaItem song={song} onPlay={onPlay} />
             <LikeButton songId={song.id} />
           </div>
         ))}

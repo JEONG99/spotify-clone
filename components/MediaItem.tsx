@@ -4,11 +4,21 @@ import { Song } from "@/types";
 
 interface MediaItemProps {
   song: Song;
+  onPlay?: (id: string) => void;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({ song }) => {
+const MediaItem: React.FC<MediaItemProps> = ({ song, onPlay }) => {
+  const handleClick = () => {
+    if (onPlay) {
+      return onPlay(song.id);
+    }
+  };
+
   return (
-    <div className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md">
+    <div
+      className="flex items-center gap-x-3 cursor-pointer hover:bg-neutral-800/50 w-full p-2 rounded-md"
+      onClick={handleClick}
+    >
       <div className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden">
         <Image
           fill

@@ -2,13 +2,14 @@
 
 import { usePathname } from "next/navigation";
 import React, { useMemo } from "react";
+import { twMerge } from "tailwind-merge";
 import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { FaSpotify } from "react-icons/fa";
+
 import SidebarLink from "@/components/SidebarLink";
 import Library from "@/components/Library";
 import usePlayer from "@/hooks/usePlayer";
-import { twMerge } from "tailwind-merge";
 
 interface SidebarProps {
   children: React.ReactNode;
