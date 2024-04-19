@@ -1,10 +1,12 @@
 import { useSessionContext } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 import { useUser } from "@/hooks/useUser";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import getLikedSong from "@/actions/getLikedSong";
+import { Song } from "@/types";
 
 interface LikeButtonProps {
   songId: string;
@@ -15,26 +17,19 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
   const { supabaseClient } = useSessionContext();
   const { user } = useUser();
 
-  const [isLiked, setIsLiked] = useState(false);
+  const queryClient = useQueryClient();
+  const { data: isLiked, refetch: refetchSong } = useQuery({
+    queryKey: ["likedSong", songId],
+    queryFn: () =>
+      getLikedSong({
+        supabase: supabaseClient,
+        userId: user?.id,
+        songId,
+      }),
+    retry: false,
+  });
 
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart;
-
-  useEffect(() => {
-    if (!user?.id) return;
-
-    const fetchData = async () => {
-      const { data, error } = await supabaseClient
-        .from("liked_songs")
-        .select("*")
-        .eq("user_id", user.id)
-        .eq("song_id", songId)
-        .single();
-      if (data && !error) {
-        setIsLiked(true);
-      }
-    };
-    fetchData();
-  }, [user, supabaseClient, songId]);
 
   const handleLiked = async () => {
     if (!user?.id) {
@@ -51,7 +46,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
       if (error) {
         toast.error(error.message);
       } else {
-        setIsLiked(false);
+        refetchSong();
       }
     } else {
       const { error } = await supabaseClient.from("liked_songs").insert({
@@ -62,7 +57,18 @@ const LikeButton: React.FC<LikeButtonProps> = ({ songId }) => {
       if (error) {
         toast.error(error.message);
       } else {
-        setIsLiked(true);
+        const { data: newSong } = await supabaseClient
+          .from("songs")
+          .select("*")
+          .eq("id", songId)
+          .single();
+        queryClient.setQueryData(["likedSongs"], (prev: Song[]) => {
+          if (!prev.find((song) => song.id === songId)) {
+            return [...prev, newSong];
+          }
+          return prev;
+        });
+        refetchSong();
       }
     }
     router.refresh();

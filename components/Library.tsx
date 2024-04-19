@@ -1,7 +1,11 @@
 import { TbPlaylist } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
+import MediaItem from "@/components/MediaItem";
+import LikeButton from "@/components/LikeButton";
+import useLikedSongs from "@/hooks/useLikedSongs";
 
 const Library = () => {
+  const { data: songs } = useLikedSongs();
   return (
     <div>
       <div className="flex justify-between items-center p-5">
@@ -21,6 +25,14 @@ const Library = () => {
           />
         </div>
       </div>
+      <ul>
+        {songs?.map((song) => (
+          <div key={song.id} className="flex gap-2 pr-5">
+            <MediaItem song={song} />
+            <LikeButton songId={song.id} />
+          </div>
+        ))}
+      </ul>
     </div>
   );
 };
