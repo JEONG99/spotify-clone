@@ -6,12 +6,16 @@ import Header from "@/components/Header";
 import PageContent from "@/components/PageContent";
 import { Separator } from "@/components/ui/separator";
 
+export const revalidate = 0;
+
 const LibraryPage = async () => {
   const supabase = createServerComponentClient({
     cookies: cookies,
   });
-  const user = (await supabase.auth.getUser()).data.user;
-  const songs = await getLikedSongs({ supabase, userId: user?.id });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const songs = await getLikedSongs({ supabase, userId: session?.user?.id });
 
   return (
     <div>

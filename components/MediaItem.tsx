@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 
 import { Song } from "@/types";
+import useLoadImage from "@/hooks/useLoadImage";
 
 interface MediaItemProps {
   song: Song;
@@ -8,6 +11,8 @@ interface MediaItemProps {
 }
 
 const MediaItem: React.FC<MediaItemProps> = ({ song, onPlay }) => {
+  const imagePath = useLoadImage(song);
+
   const handleClick = () => {
     if (onPlay) {
       return onPlay(song.id);
@@ -22,7 +27,7 @@ const MediaItem: React.FC<MediaItemProps> = ({ song, onPlay }) => {
       <div className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden">
         <Image
           fill
-          src={song.image_path || "/images/liked.png"}
+          src={imagePath || "/images/liked.png"}
           alt="Media Item"
           className="object-cover"
         />

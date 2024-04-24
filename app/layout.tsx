@@ -8,6 +8,7 @@ import SupabaseProvider from "@/provider/SupabaseProvider";
 import ToastProvider from "@/provider/ToastProvider";
 import Player from "@/components/Player";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
+import ModalProvier from "@/provider/ModalProvider";
 
 const notoSans = Noto_Sans_KR({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
         <SupabaseProvider>
           <ReactQueryProvider>
             <UserProvider>
+              <ModalProvier />
               <Sidebar>{children}</Sidebar>
               <Player />
             </UserProvider>

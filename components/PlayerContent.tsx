@@ -12,9 +12,10 @@ import LikeButton from "@/components/LikeButton";
 
 interface PlayerContentProps {
   song: Song;
+  songUrl: string;
 }
 
-const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
+const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
   const player = usePlayer();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -64,7 +65,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song }) => {
     }
   };
 
-  const [play, { pause, sound }] = useSound(song.song_path, {
+  const [play, { pause, sound }] = useSound(songUrl, {
     volume: volume,
     onplay: () => setIsPlaying(true),
     onpause: () => setIsPlaying(false),

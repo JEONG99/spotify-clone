@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { IoIosPlay } from "react-icons/io";
 import { Song } from "@/types";
+import useLoadImage from "@/hooks/useLoadImage";
 
 interface SongItemProps {
   song: Song;
@@ -8,13 +11,15 @@ interface SongItemProps {
 }
 
 const SongItem: React.FC<SongItemProps> = ({ song, onPlay }) => {
+  const imagePath = useLoadImage(song);
+
   return (
     <div
       className="relative p-3 rounded-md cursor-pointer hover:bg-neutral-800 transition-colors group"
       onClick={() => onPlay(song.id)}
     >
       <div className="relative w-full aspect-square rounded-full overflow-hidden">
-        <Image src={song.image_path} alt={song.title} fill />
+        <Image src={imagePath || "/images/liked.png"} alt={song.title} fill />
       </div>
       <h4 className="my-2 font-semibold">{song.title}</h4>
       <h5 className="text-xs text-neutral-300">{song.genre}</h5>

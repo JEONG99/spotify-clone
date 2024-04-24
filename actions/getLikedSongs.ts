@@ -17,7 +17,8 @@ const getLikedSongs = async ({
     .order("created_at", { ascending: true });
 
   if (error) {
-    throw error;
+    console.log(error);
+    return [];
   }
   if (!data) {
     return [];

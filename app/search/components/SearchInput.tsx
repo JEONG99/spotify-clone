@@ -25,7 +25,7 @@ const SearchInput = () => {
 
   return (
     <Input
-      className="text-neutral-300 bg-neutral-900 border-neutral-300 focus-visible:ring-0 focus-visible:ring-offset-0 hover:bg-neutral-800 caret-neutral-300"
+      className="text-neutral-300 border border-neutral-300 focus:!outline-none hover:bg-neutral-800 caret-neutral-300"
       placeholder="어떤 노래를 찾으시나요?"
       value={value}
       onChange={(e) => setValue(e.target.value)}
